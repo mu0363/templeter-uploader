@@ -1,0 +1,14 @@
+{
+  "name": "templeter-uploader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cloudinary": "^1.25.1",
+    "firebase-admin": "^9.7.0",
+    "googleapis": "^73.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^9.0.0"
+  }
+}
