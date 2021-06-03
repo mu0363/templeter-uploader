@@ -7,7 +7,7 @@ const cloudinary_api_secret = 'H59GBSCnOARhOYuZPm4O63Lo8x0';
 
 //アップロード処理関数
 const uploadVideo = async () => {
-  const fileName = await getSheetData();
+  const { username, fileName } = await getSheetData();
   //アップロードするファイルの絶対パス
   const filepath = `/Users/ai-relations/Desktop/templater/output/${fileName}.mp4`;
   //cloudinaryのアカウント名
@@ -33,23 +33,22 @@ const uploadVideo = async () => {
     function (error, result) {
       //返却されたurlデータをdataに格納
       const data = {
-        url: result.url,
         createdAt: new Date(),
+        username,
         public_id,
         cloud_name,
       };
       //firestoreに書き込み
-      const urlRef = db.collection('urls');
+      const urlRef = db.collection('cloudinary');
       const ref = urlRef.doc();
       const id = ref.id;
-      data.id = id;
       console.log(data);
 
       urlRef
         .doc(id)
-        .set(data)
+        .set({ id, ...data })
         .then(() => {
-          console.log('Done!!');
+          console.log('------------- Uploaded!! -------------');
         });
     }
   );
